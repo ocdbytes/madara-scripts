@@ -18,6 +18,7 @@
 -⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠷⠶⣦⣤⣤⣤⣤⣤⡶⠾⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀
 ```
 
+- Madara Repo Link : [Git Repo :)](https://github.com/madara-alliance/madara)
 - To run the madara sequencer :
 
   ```sh
