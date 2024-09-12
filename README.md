@@ -31,5 +31,5 @@
   --rpc-cors "*" \
   --rpc-external \
   --devnet \
-  --l1-endpoint https://sepolia.infura.io/v3/bf9e41563a6a45e28eb60382d85ef3c9
+  --l1-endpoint https://sepolia.infura.io/v3/$INFURA_API_KEY
   ```
