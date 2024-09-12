@@ -1,14 +1,29 @@
-import { Account, RpcProvider, hash, CallData, Contract, json } from "starknet";
+import {
+  Account,
+  RpcProvider,
+  hash,
+  CallData,
+  Contract,
+  json,
+  stark,
+  ec,
+} from "starknet";
 import { readFileSync } from "fs";
+import {
+  ETH_ADDRESS,
+  SENDER_ACCOUNT_ADDRESS,
+  SENDER_ACCOUNT_PK,
+  STRK_ADDRESS,
+} from "../constants";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
 });
 
-const account_0_address =
-  "0x44bd8470d4cf664f8b76e1f510e3b2d4ff6c35e8c044478c3068537c9631e74";
-const account_0_pk =
-  "0x368149220677b8e6354cf68c31cbea47edb92a8780121f204bb530cf7cde2c7";
+const args = process.argv.slice(2);
+
+const account_0_address = SENDER_ACCOUNT_ADDRESS;
+const account_0_pk = SENDER_ACCOUNT_PK;
 
 const account = new Account(provider, account_0_address, account_0_pk);
 
@@ -19,23 +34,23 @@ const json_data = readFileSync(
 
 const contract_eth = new Contract(
   json.parse(json_data).abi,
-  "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+  ETH_ADDRESS,
   provider
 );
 const contract_strk = new Contract(
   json.parse(json_data).abi,
-  "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+  STRK_ADDRESS,
   provider
 );
 
-async function transfer_funds(contractAddress) {
+async function transfer_funds(contractAddress, sender_nonce_starting_index) {
   let hash_0 = await account.execute(
     contract_eth.populate("transfer", [
       contractAddress,
       "100000000000000000000",
     ]),
     {
-      nonce: 0,
+      nonce: sender_nonce_starting_index,
       maxFee: "2870302852309280000",
     }
   );
@@ -49,7 +64,7 @@ async function transfer_funds(contractAddress) {
       "100000000000000000000",
     ]),
     {
-      nonce: 1,
+      nonce: sender_nonce_starting_index + 1,
       maxFee: "2870302852309280000",
     }
   );
@@ -75,16 +90,13 @@ async function transfer_funds(contractAddress) {
   );
 }
 
-async function main() {
-  const privateKey =
-    "0x297c53b2998da162e534aacaed1ab468f369b78e4cdf06214c95e9aa438371c";
+async function main(nonce, sender_nonce_starting_index) {
+  const privateKey = stark.randomAddress();
   console.log("New OZ account:\nprivateKey =", privateKey);
-  const starkKeyPub =
-    "0x89054276d144692940878eb72d9d93ce489c6fc476a108a7edacfd10a3c700";
+  const starkKeyPub = ec.starkCurve.getStarkKey(privateKey);
   console.log("publicKey =", starkKeyPub);
 
-  const accountClassHash =
-    "0x7446579979174f1687e030b2da6a0bf41ec995a206ddf314030e504536c61c1";
+  const accountClassHash = ACCOUNT_CONTRACT_CLASS_HASH;
 
   try {
     const accountConstructorCallData = CallData.compile({
@@ -99,7 +111,7 @@ async function main() {
     );
 
     console.log("Precalculated account address =", contractAddress);
-    await transfer_funds(contractAddress);
+    await transfer_funds(contractAddress, sender_nonce_starting_index);
 
     const account = new Account(provider, contractAddress, privateKey);
 
@@ -110,7 +122,7 @@ async function main() {
         addressSalt: starkKeyPub,
       },
       {
-        nonce: 1,
+        nonce: nonce,
         maxFee: "2870302852309280000",
       }
     );
@@ -126,4 +138,4 @@ async function main() {
   }
 }
 
-main();
+main(args[0]);
