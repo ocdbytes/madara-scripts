@@ -5,7 +5,11 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "deploy_account": "yarn tsx scripts/contract_calls/deployAccount.ts",
+        "declare_contract": "yarn tsx scripts/contract_calls/declareContract.ts",
+        "deploy_contract": "yarn tsx scripts/contract_calls/deployContract.ts",
+        "deploy_contract_udc": "yarn tsx scripts/contract_calls/deployContract_UDC.ts"
     },
     "keywords": [],
     "author": "",

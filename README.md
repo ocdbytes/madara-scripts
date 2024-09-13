@@ -1,13 +1,13 @@
 # Scripts for madara
 
 ```diff
-!⠀⠀⣀⣀⣀⣠⣤⣤⣤⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀
-!⣠⣤⣤⣤⡤⢴⡶⠶⣤⣄⣉⠙⣦⡀⠀⠀⠀⠀⠀
-!⢨⣭⣭⡅⣼⣿⣿⡇⠈⢻⣮⡑⣦⡙⢦⣄⡀⠀⠀
-!⣄⢻⣿⣧⠻⠇⠋⠀⠛⠀⢘⣿⢰⣿⣦⡀⢍⣂⠀
-!⠈⣃⡙⢿⣧⣙⠶⣿⣿⡷⢘⣡⣿⣿⣿⣿⣆⠹⠂
-!⠀⠈⠳⡀⠉⠻⣿⣶⣶⡾⠿⠿⠿⠿⠛⠋⣉⡴⠀
-!⠀⠀⠀⠀⠈⠓⠦⠤⠀⠀⠐⠖⠉⠛⠛⠛⠋⠉⠀
+-⠀⠀⣀⣀⣀⣠⣤⣤⣤⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀
+-⣠⣤⣤⣤⡤⢴⡶⠶⣤⣄⣉⠙⣦⡀⠀⠀⠀⠀⠀
+-⢨⣭⣭⡅⣼⣿⣿⡇⠈⢻⣮⡑⣦⡙⢦⣄⡀⠀⠀
+-⣄⢻⣿⣧⠻⠇⠋⠀⠛⠀⢘⣿⢰⣿⣦⡀⢍⣂⠀
+-⠈⣃⡙⢿⣧⣙⠶⣿⣿⡷⢘⣡⣿⣿⣿⣿⣆⠹⠂
+-⠀⠈⠳⡀⠉⠻⣿⣶⣶⡾⠿⠿⠿⠿⠛⠋⣉⡴⠀
+-⠀⠀⠀⠀⠈⠓⠦⠤⠀⠀⠐⠖⠉⠛⠛⠛⠋⠉⠀
 ```
 
 - Madara Repo Link : [Git Repo :)](https://github.com/madara-alliance/madara)
@@ -33,24 +33,40 @@
 
   ```sh
   node scripts/contract_calls/declareContract.js
+
+  # or
+
+  yarn declare_contract
   ```
 
 - deployAccount
 
   ```sh
   node scripts/contract_calls/deployAccount.js
+
+  # or
+
+  yarn deploy_account
   ```
 
 - deployContract
 
   ```sh
   node scripts/contract_calls/deployContract.js
+
+  # or
+
+  yarn deploy_contract
   ```
 
 - deployContract_UDC
 
   ```sh
   node scripts/contract_calls/deployContract_UDC.js
+
+  # or
+
+  yarn deploy_contract_udc
   ```
 
 `constants.js` is where we store all the vars.
