@@ -15,7 +15,7 @@ import {
   ACCOUNT_0_PK,
   ERC20_CONTRACT_CLASS_HASH,
   UDC_ADDRESS,
-} from "../constants.js";
+} from "../constants";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
@@ -50,7 +50,7 @@ async function main() {
   ]);
 
   let res = await account.execute(populated_txn, {
-    nonce: nonce,
+    nonce: await provider.getNonceForAddress(account_0_address),
     maxFee: "2870302852309280000",
   });
 

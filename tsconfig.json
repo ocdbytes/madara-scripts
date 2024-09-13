@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Specify ECMAScript target version
+    "module": "commonjs", // Specify module code generation
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Interoperability between ESModules and CommonJS
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistencies in case-sensitive file names
+    "resolveJsonModule": true,
+    "outDir": "./dist"
+  },
+  "include": ["scripts/**/*.ts"], // Specify included files
+  "exclude": ["node_modules", "**/*.test.ts"] // Exclude test files and node_modules
+}

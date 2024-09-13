@@ -14,7 +14,7 @@ import {
   SENDER_ACCOUNT_ADDRESS,
   SENDER_ACCOUNT_PK,
   STRK_ADDRESS,
-} from "../constants.js";
+} from "../constants";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
@@ -45,7 +45,7 @@ const contract_strk = new Contract(
   provider
 );
 
-async function transfer_funds(contractAddress) {
+async function transfer_funds(contractAddress: string) {
   let hash_0 = await account.execute(
     contract_eth.populate("transfer", [
       contractAddress,

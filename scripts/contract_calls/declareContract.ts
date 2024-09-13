@@ -1,12 +1,10 @@
 import { Account, RpcProvider, json } from "starknet";
 import { readFileSync } from "fs";
-import { ACCOUNT_0_ADDRESS, ACCOUNT_0_PK } from "../constants.js";
+import { ACCOUNT_0_ADDRESS, ACCOUNT_0_PK } from "../constants";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
 });
-
-const args = process.argv.slice(2);
 
 const account_0_address = ACCOUNT_0_ADDRESS;
 const account_0_pk = ACCOUNT_0_PK;

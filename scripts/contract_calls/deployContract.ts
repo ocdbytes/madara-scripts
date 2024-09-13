@@ -1,10 +1,18 @@
-import { Account, RpcProvider, hash, CallData, Contract, json, byteArray } from "starknet";
+import {
+  Account,
+  RpcProvider,
+  hash,
+  CallData,
+  Contract,
+  json,
+  byteArray,
+} from "starknet";
 import { readFileSync } from "fs";
 import {
   ACCOUNT_0_ADDRESS,
   ACCOUNT_0_PK,
   ERC20_CONTRACT_CLASS_HASH,
-} from "../constants.js";
+} from "../constants";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
@@ -15,12 +23,12 @@ const account_0_pk = ACCOUNT_0_PK;
 
 const account = new Account(provider, account_0_address, account_0_pk);
 
-// const json_sierra_data = readFileSync(
-//   "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.sierra.json",
-//   "utf8"
-// );
+const json_sierra_data = readFileSync(
+  "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.sierra.json",
+  "utf8"
+);
 
-// const compiledERC20Sierra = json.parse(json_sierra_data);
+const compiledERC20Sierra = json.parse(json_sierra_data);
 
 async function main() {
   let res = await account.deployContract(
