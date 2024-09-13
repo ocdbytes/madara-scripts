@@ -1,21 +1,13 @@
 # Scripts for madara
 
 ```diff
--⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣴⠶⠞⠛⠛⠛⠛⠻⠶⢶⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀
--⠀⠀⠀⠀⠀⣠⣴⠟⠋⠁⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠈⠉⠻⢶⣄⠀⠀⠀⠀⠀
--⠀⠀⠀⣠⡾⠋⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿⣟⠛⠒⠄⠀⠀⠀⠀⠙⢷⣄⠀⠀⠀
--⠀⠀⣴⠟⠀⠀⠀⠀⠀⠀⠀⢀⣰⣿⣿⣿⣿⣆⡀⠀⠀⠀⠀⠀⠀⠀⠹⣧⡀⠀
--⠀⣼⠏⠀⠀⠀⠀⠀⠀⡠⠊⠁⠀⠙⠿⠿⠛⠀⠈⠑⢄⠀⠀⠀⠀⠀⠀⠘⣷⠀
--⢰⡟⠀⠀⠀⠀⠀⢀⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⡀⠀⠀⠀⠀⠀⢹⣇
--⣾⠃⠀⠀⠀⠀⠀⡜⠀⠀⠀⠀⢠⣶⣿⣿⣷⣄⠀⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⣿
--⣿⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⣿
--⢿⡄⠀⠀⢠⠀⢀⣷⣶⣤⡀⠀⠘⢿⣿⣿⡿⠋⠀⠀⣠⣴⣾⣄⠀⠀⠀⠀⠀⣿
--⠸⣧⠀⠀⢸⣷⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⣿⣿⣧⠀⠀⠀⣸⡏
--⠀⢻⣆⠀⠀⠙⠿⠿⠿⠛⢅⡀⠀⠀⠀⠀⠀⠀⢀⡠⠛⠛⠛⣿⡟⠀⠀⢠⡿⠀
--⠀⠀⢻⣦⠀⠀⠀⠀⠀⠀⠀⠈⠑⠒⠒⠀⠐⠊⠁⠀⠀⡠⠞⠋⠀⠀⣠⡿⠁⠀
--⠀⠀⠀⠙⢷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⠋⠀⠀⠀
--⠀⠀⠀⠀⠀⠙⠷⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡾⠋⠀⠀⠀⠀⠀
--⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠷⠶⣦⣤⣤⣤⣤⣤⡶⠾⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀
+!⠀⠀⣀⣀⣀⣠⣤⣤⣤⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀
+!⣠⣤⣤⣤⡤⢴⡶⠶⣤⣄⣉⠙⣦⡀⠀⠀⠀⠀⠀
+!⢨⣭⣭⡅⣼⣿⣿⡇⠈⢻⣮⡑⣦⡙⢦⣄⡀⠀⠀
+!⣄⢻⣿⣧⠻⠇⠋⠀⠛⠀⢘⣿⢰⣿⣦⡀⢍⣂⠀
+!⠈⣃⡙⢿⣧⣙⠶⣿⣿⡷⢘⣡⣿⣿⣿⣿⣆⠹⠂
+!⠀⠈⠳⡀⠉⠻⣿⣶⣶⡾⠿⠿⠿⠿⠛⠋⣉⡴⠀
+!⠀⠀⠀⠀⠈⠓⠦⠤⠀⠀⠐⠖⠉⠛⠛⠛⠋⠉⠀
 ```
 
 - Madara Repo Link : [Git Repo :)](https://github.com/madara-alliance/madara)
@@ -37,9 +29,28 @@
 
 ## Scripts Available
 
-- declareContract (args : `nonce of account0`)
-- deployAccount (args : `nonce of account0`, `nonce of sender account`)
-- deployContract (args : `nonce of account0`)
-- deployContract_UDC (args : `nonce of account0`)
+- declareContract
+
+  ```sh
+  node scripts/contract_calls/declareContract.js
+  ```
+
+- deployAccount
+
+  ```sh
+  node scripts/contract_calls/deployAccount.js
+  ```
+
+- deployContract
+
+  ```sh
+  node scripts/contract_calls/deployContract.js
+  ```
+
+- deployContract_UDC
+
+  ```sh
+  node scripts/contract_calls/deployContract_UDC.js
+  ```
 
 `constants.js` is where we store all the vars.

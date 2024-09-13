@@ -5,27 +5,29 @@ import {
   CallData,
   Contract,
   json,
-  stark,
   ec,
 } from "starknet";
 import { readFileSync } from "fs";
 import {
+  ACCOUNT_CONTRACT_CLASS_HASH,
   ETH_ADDRESS,
   SENDER_ACCOUNT_ADDRESS,
   SENDER_ACCOUNT_PK,
   STRK_ADDRESS,
-} from "../constants";
+} from "../constants.js";
 
 const provider = new RpcProvider({
   nodeUrl: "http://localhost:9944",
 });
 
-const args = process.argv.slice(2);
+const account_sender_address = SENDER_ACCOUNT_ADDRESS;
+const account_sender_pk = SENDER_ACCOUNT_PK;
 
-const account_0_address = SENDER_ACCOUNT_ADDRESS;
-const account_0_pk = SENDER_ACCOUNT_PK;
-
-const account = new Account(provider, account_0_address, account_0_pk);
+const account = new Account(
+  provider,
+  account_sender_address,
+  account_sender_pk
+);
 
 const json_data = readFileSync(
   "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.sierra.json",
@@ -43,14 +45,14 @@ const contract_strk = new Contract(
   provider
 );
 
-async function transfer_funds(contractAddress, sender_nonce_starting_index) {
+async function transfer_funds(contractAddress) {
   let hash_0 = await account.execute(
     contract_eth.populate("transfer", [
       contractAddress,
       "100000000000000000000",
     ]),
     {
-      nonce: sender_nonce_starting_index,
+      nonce: await provider.getNonceForAddress(account_sender_address),
       maxFee: "2870302852309280000",
     }
   );
@@ -64,7 +66,7 @@ async function transfer_funds(contractAddress, sender_nonce_starting_index) {
       "100000000000000000000",
     ]),
     {
-      nonce: sender_nonce_starting_index + 1,
+      nonce: await provider.getNonceForAddress(account_sender_address),
       maxFee: "2870302852309280000",
     }
   );
@@ -74,7 +76,7 @@ async function transfer_funds(contractAddress, sender_nonce_starting_index) {
 
   console.log(
     ">>> balance_sender_final [ETH]",
-    await contract_eth.balanceOf(account_0_address)
+    await contract_eth.balanceOf(account_sender_address)
   );
   console.log(
     ">>> balance_reciever_final [ETH]",
@@ -82,7 +84,7 @@ async function transfer_funds(contractAddress, sender_nonce_starting_index) {
   );
   console.log(
     ">>> balance_sender_final [STRK]",
-    await contract_strk.balanceOf(account_0_address)
+    await contract_strk.balanceOf(account_sender_address)
   );
   console.log(
     ">>> balance_reciever_final [STRK]",
@@ -90,8 +92,9 @@ async function transfer_funds(contractAddress, sender_nonce_starting_index) {
   );
 }
 
-async function main(nonce, sender_nonce_starting_index) {
-  const privateKey = stark.randomAddress();
+async function main() {
+  const privateKey =
+    "0x297c53b2998da162e534aacaed1ab468f369b78e4cdf06214c95e9aa438371c";
   console.log("New OZ account:\nprivateKey =", privateKey);
   const starkKeyPub = ec.starkCurve.getStarkKey(privateKey);
   console.log("publicKey =", starkKeyPub);
@@ -111,7 +114,7 @@ async function main(nonce, sender_nonce_starting_index) {
     );
 
     console.log("Precalculated account address =", contractAddress);
-    await transfer_funds(contractAddress, sender_nonce_starting_index);
+    await transfer_funds(contractAddress);
 
     const account = new Account(provider, contractAddress, privateKey);
 
@@ -122,7 +125,7 @@ async function main(nonce, sender_nonce_starting_index) {
         addressSalt: starkKeyPub,
       },
       {
-        nonce: nonce,
+        nonce: 0,
         maxFee: "2870302852309280000",
       }
     );
@@ -138,4 +141,4 @@ async function main(nonce, sender_nonce_starting_index) {
   }
 }
 
-main(args[0]);
+main();
