@@ -38,7 +38,7 @@ async function main() {
 
   let populated_txn = udc_contract.populate("deployContract", [
     ERC20_CONTRACT_CLASS_HASH,
-    "12345678",
+    "1234567890abc",
     false,
     CallData.compile({
       name: byteArray.byteArrayFromString("zkSTRK"),

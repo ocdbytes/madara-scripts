@@ -1,5 +1,11 @@
 # Scripts for madara
 
+> [!IMPORTANT]
+> You need to update the SENDER_ACCOUNT_ADDRESS, SENDER_ACCOUNT_PK
+> in [constants.ts](./scripts/constants.ts) everytime you
+> are running madara as devnet addresses are not yet constant
+> everytime.
+
 ```diff
 -⠀⠀⣀⣀⣀⣠⣤⣤⣤⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀
 -⣠⣤⣤⣤⡤⢴⡶⠶⣤⣄⣉⠙⣦⡀⠀⠀⠀⠀⠀

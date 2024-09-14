@@ -4,9 +4,9 @@ export const ACCOUNT_0_PK =
   "0x297c53b2998da162e534aacaed1ab468f369b78e4cdf06214c95e9aa438371c";
 
 export const SENDER_ACCOUNT_ADDRESS =
-  "0x5d4ceeaf44ce7b8c84f3aa696e3500915ad520c632def686aa85bf31711f4b2";
+  "0x36d9d8b9bdcd280e262c54d246a76fd5ccdac595d32372823b8907e56bc537d";
 export const SENDER_ACCOUNT_PK =
-  "0xafceb14ab73df2f5ea4398d28a537cf58d748d2e9ba25e22c892d3a96d8aec";
+  "0x52e2e3a229bfe7aee35cee33eca1131cccbcb4562ce1f3b6cb5ceac357c4f50";
 
 export const ETH_ADDRESS =
   "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7";
