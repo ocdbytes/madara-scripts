@@ -30,7 +30,7 @@ const account = new Account(
 );
 
 const json_data = readFileSync(
-  "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.sierra.json",
+  __dirname + "/../../contracts/ERC20.sierra.json",
   "utf8"
 );
 

@@ -12,11 +12,11 @@ const account_0_pk = ACCOUNT_0_PK;
 const account = new Account(provider, account_0_address, account_0_pk);
 
 const json_sierra_data = readFileSync(
-  "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.sierra.json",
+  __dirname + "/../../contracts/ERC20.sierra.json",
   "utf8"
 );
 const json_casm_data = readFileSync(
-  "/Users/ocdbytes/Karnot/testing_madara_scripts/contracts/ERC20.casm.json",
+  __dirname + "/../../contracts/ERC20.casm.json",
   "utf8"
 );
 
