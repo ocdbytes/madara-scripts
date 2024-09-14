@@ -3,13 +3,14 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "deploy_account": "yarn tsx scripts/contract_calls/deployAccount.ts",
         "declare_contract": "yarn tsx scripts/contract_calls/declareContract.ts",
         "deploy_contract": "yarn tsx scripts/contract_calls/deployContract.ts",
-        "deploy_contract_udc": "yarn tsx scripts/contract_calls/deployContract_UDC.ts"
+        "deploy_contract_udc": "yarn tsx scripts/contract_calls/deployContract_UDC.ts",
+        "faucet": "yarn tsx scripts/faucet.ts"
     },
     "keywords": [],
     "author": "",
@@ -19,6 +20,7 @@
     },
     "devDependencies": {
         "@types/node": "^22.5.4",
+        "ts-node": "^10.9.2",
         "tsx": "^4.19.1",
         "typescript": "^5.6.2"
     },
