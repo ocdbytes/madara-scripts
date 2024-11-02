@@ -1,10 +1,11 @@
-import { Account, Contract, RpcProvider } from "starknet";
+import { Account, Block, Contract, RpcProvider } from "starknet";
 import {
   ETH_ADDRESS,
   L2_ACCOUNT_ADDRESS,
   L2_ACCOUNT_PK,
   L2_RPC_URL,
 } from "./constants";
+import { waitForTransactionSuccess } from "./post_setup/utils";
 
 const starknet_provider = new RpcProvider({
   nodeUrl: L2_RPC_URL,
@@ -78,26 +79,24 @@ async function transfer(
   });
 
   let txn_hash = await account.execute(calldata);
-  let receipt = await starknet_provider.waitForTransaction(
-    txn_hash.transaction_hash,
-    {
-      retryInterval: 100,
-    }
-  );
-  if (!receipt.isSuccess()) {
-    console.log("❌ Failed to do a transfer on Starknet account");
-    process.exit(1);
-  }
+  let receipt = await waitForTransactionSuccess(txn_hash.transaction_hash);
 
-  // if txn is pending, block_number won't be available
-  while (!receipt.block_number) {
+  while (!("block_hash" in receipt) || !receipt.block_hash) {
     receipt = await starknet_provider.getTransactionReceipt(
       txn_hash.transaction_hash
     );
     await new Promise((resolve) => setTimeout(resolve, 200));
   }
-  console.log("✅ Successfully did a transfer on Starknet account");
-  return receipt.block_number;
+
+  // Get block details if needed
+  if ("block_hash" in receipt && receipt.block_hash) {
+    const block = (await starknet_provider.getBlock(
+      receipt.block_hash
+    )) as Block;
+    return block.block_number;
+  }
+
+  throw new Error("Could not determine block number");
 }
 
 async function main() {

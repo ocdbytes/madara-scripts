@@ -4,9 +4,11 @@ import {
   CallData,
   Contract,
   ec,
+  GetTransactionReceiptResponse,
   hash,
   RpcProvider,
   stark,
+  TransactionFinalityStatus,
 } from "starknet";
 import {
   ETH_ADDRESS,
@@ -48,13 +50,32 @@ export async function getAppChainBalance(address: string) {
   return balance.balance;
 }
 
-export async function waitForTransactionSuccess(hash: string) {
-  let receipt = await starknet_provider.waitForTransaction(hash);
-  if (!receipt.isSuccess()) {
-    console.log("❌ Transaction failed - ", hash);
+export async function waitForTransactionSuccess(
+  hash: string
+): Promise<GetTransactionReceiptResponse> {
+  try {
+    const receipt = await starknet_provider.waitForTransaction(hash, {
+      retryInterval: 1000,
+      successStates: [
+        TransactionFinalityStatus.ACCEPTED_ON_L2,
+        TransactionFinalityStatus.ACCEPTED_ON_L1,
+      ],
+    });
+
+    if (!receipt.isSuccess()) {
+      console.log("❌ Transaction failed - ", hash);
+      console.log("Status:", receipt.status);
+      if ("revert_reason" in receipt) {
+        console.log("Revert reason:", receipt.revert_reason);
+      }
+      process.exit(1);
+    }
+
+    return receipt;
+  } catch (error) {
+    console.error("Error waiting for transaction:", error);
     process.exit(1);
   }
-  return receipt;
 }
 
 export function calculatePrefactualAccountAddress(): {
@@ -105,12 +126,21 @@ export async function deployStarknetAccount(
   });
 
   let receipt = await waitForTransactionSuccess(transaction_hash);
-  // if txn is pending, block_number won't be available
-  while (!receipt.block_number) {
+
+  while (!("block_hash" in receipt) || !receipt.block_hash) {
     receipt = await starknet_provider.getTransactionReceipt(transaction_hash);
     await new Promise((resolve) => setTimeout(resolve, 200));
   }
-  return receipt.block_number;
+
+  // Get block details if needed
+  if ("block_hash" in receipt && receipt.block_hash) {
+    const block = (await starknet_provider.getBlock(
+      receipt.block_hash
+    )) as Block;
+    return block.block_number;
+  }
+
+  throw new Error("Could not determine block number");
 }
 
 export async function validateBlockPassesSnosChecks(block_number: number) {
@@ -261,24 +291,22 @@ export async function transfer(
   });
 
   let txn_hash = await account.execute(calldata);
-  let receipt = await starknet_provider.waitForTransaction(
-    txn_hash.transaction_hash,
-    {
-      retryInterval: 100,
-    }
-  );
-  if (!receipt.isSuccess()) {
-    console.log("❌ Failed to do a transfer on Starknet account");
-    process.exit(1);
-  }
+  let receipt = await waitForTransactionSuccess(txn_hash.transaction_hash);
 
-  // if txn is pending, block_number won't be available
-  while (!receipt.block_number) {
+  while (!("block_hash" in receipt) || !receipt.block_hash) {
     receipt = await starknet_provider.getTransactionReceipt(
       txn_hash.transaction_hash
     );
     await new Promise((resolve) => setTimeout(resolve, 200));
   }
-  console.log("✅ Successfully did a transfer on Starknet account");
-  return receipt.block_number;
+
+  // Get block details if needed
+  if ("block_hash" in receipt && receipt.block_hash) {
+    const block = (await starknet_provider.getBlock(
+      receipt.block_hash
+    )) as Block;
+    return block.block_number;
+  }
+
+  throw new Error("Could not determine block number");
 }
