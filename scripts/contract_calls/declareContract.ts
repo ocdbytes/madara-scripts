@@ -1,22 +1,19 @@
 import { Account, RpcProvider, json } from "starknet";
 import { readFileSync } from "fs";
-import { ACCOUNT_0_ADDRESS, ACCOUNT_0_PK } from "../constants";
+import { L2_ACCOUNT_ADDRESS, L2_ACCOUNT_PK, L2_RPC_URL } from "../constants";
 
 const provider = new RpcProvider({
-  nodeUrl: "http://localhost:9944",
+  nodeUrl: L2_RPC_URL,
 });
 
-const account_0_address = ACCOUNT_0_ADDRESS;
-const account_0_pk = ACCOUNT_0_PK;
-
-const account = new Account(provider, account_0_address, account_0_pk);
+const account = new Account(provider, L2_ACCOUNT_ADDRESS, L2_ACCOUNT_PK);
 
 const json_sierra_data = readFileSync(
-  __dirname + "/../../contracts/ERC20.sierra.json",
+  __dirname + "/../../contracts/HelloStarknet.sierra.json",
   "utf8"
 );
 const json_casm_data = readFileSync(
-  __dirname + "/../../contracts/ERC20.casm.json",
+  __dirname + "/../../contracts/HelloStarknet.casm.json",
   "utf8"
 );
 
@@ -30,8 +27,7 @@ async function main() {
       casm: compiledERC20Casm,
     },
     {
-      nonce: await provider.getNonceForAddress(account_0_address),
-      maxFee: "2870302852309280000",
+      nonce: await provider.getNonceForAddress(L2_ACCOUNT_ADDRESS),
     }
   );
 

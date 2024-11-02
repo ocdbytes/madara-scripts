@@ -1,20 +1,25 @@
-import starknet from "starknet";
+import { Account, Contract, RpcProvider } from "starknet";
+import {
+  ETH_ADDRESS,
+  L2_ACCOUNT_ADDRESS,
+  L2_ACCOUNT_PK,
+  L2_RPC_URL,
+} from "./constants";
 
-const starknet_provider = new starknet.RpcProvider({
-  nodeUrl: "http://localhost:9944",
+const starknet_provider = new RpcProvider({
+  nodeUrl: L2_RPC_URL,
 });
 
-const ETHEREUM_APP_CHAIN_ADDRESS =
-  "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7";
+const ETHEREUM_APP_CHAIN_ADDRESS = ETH_ADDRESS;
 
-const PRIV_KEY = "";
-const ADDRESS = "";
+const PRIV_KEY = L2_ACCOUNT_PK;
+const ADDRESS = L2_ACCOUNT_ADDRESS;
 
 async function transfer(
   starknet_account_private_key: string,
   starnet_expected_account_address: string
 ) {
-  const account = new starknet.Account(
+  const account = new Account(
     starknet_provider,
     starnet_expected_account_address,
     starknet_account_private_key,
@@ -59,7 +64,7 @@ async function transfer(
       type: "function",
     },
   ];
-  const contract = new starknet.Contract(
+  const contract = new Contract(
     abi,
     ETHEREUM_APP_CHAIN_ADDRESS,
     starknet_provider
@@ -97,7 +102,8 @@ async function transfer(
 
 async function main() {
   for (let i = 0; i <= 1000; i++) {
-    await transfer(PRIV_KEY, ADDRESS);
+    let res = await transfer(PRIV_KEY, ADDRESS);
+    console.log(">>> block number :", res);
   }
 }
 

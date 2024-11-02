@@ -11,13 +11,14 @@ import { readFileSync } from "fs";
 import {
   ACCOUNT_CONTRACT_CLASS_HASH,
   ETH_ADDRESS,
+  L2_RPC_URL,
   SENDER_ACCOUNT_ADDRESS,
   SENDER_ACCOUNT_PK,
   STRK_ADDRESS,
 } from "../constants";
 
 const provider = new RpcProvider({
-  nodeUrl: "http://localhost:9944",
+  nodeUrl: L2_RPC_URL,
 });
 
 const account_sender_address = SENDER_ACCOUNT_ADDRESS;

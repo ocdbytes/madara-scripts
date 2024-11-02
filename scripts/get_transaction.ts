@@ -1,7 +1,8 @@
 import { RpcProvider } from "starknet";
+import { L2_RPC_URL } from "./constants";
 
 const provider = new RpcProvider({
-  nodeUrl: "http://localhost:9944",
+  nodeUrl: L2_RPC_URL,
 });
 
 async function main(txnHash: string) {

@@ -1,11 +1,15 @@
 import { Account, RpcProvider, Contract } from "starknet";
 import ERC20 from "../contracts/ERC20.sierra.json";
-import { ACCOUNT_0_ADDRESS, ACCOUNT_0_PK } from "./constants";
+import {
+  ACCOUNT_0_ADDRESS,
+  ACCOUNT_0_PK,
+  ETH_ADDRESS,
+  L2_RPC_URL,
+} from "./constants";
 
-const eth_address =
-  "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7";
+const eth_address = ETH_ADDRESS;
 const provider = new RpcProvider({
-  nodeUrl: "http://localhost:9944",
+  nodeUrl: L2_RPC_URL,
 });
 const account_0_address = ACCOUNT_0_ADDRESS;
 const account_0_pk = ACCOUNT_0_PK;

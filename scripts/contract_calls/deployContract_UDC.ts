@@ -14,11 +14,12 @@ import {
   ACCOUNT_0_ADDRESS,
   ACCOUNT_0_PK,
   ERC20_CONTRACT_CLASS_HASH,
+  L2_RPC_URL,
   UDC_ADDRESS,
 } from "../constants";
 
 const provider = new RpcProvider({
-  nodeUrl: "http://localhost:9944",
+  nodeUrl: L2_RPC_URL,
 });
 
 const account_0_address = ACCOUNT_0_ADDRESS;

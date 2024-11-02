@@ -1,8 +1,8 @@
 {
-    "name": "starkli_madara_cli",
+    "name": "madara_testing_scripts",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Scripts for interacting with madara",
+    "main": "index.ts",
     "type": "commonjs",
     "scripts": {
         "build": "yarn tsc",
@@ -12,13 +12,18 @@
         "deploy_contract": "yarn tsx scripts/contract_calls/deployContract.ts",
         "deploy_contract_udc": "yarn tsx scripts/contract_calls/deployContract_UDC.ts",
         "faucet": "yarn tsx scripts/faucet.ts",
-        "transfers": "yarn tsx scripts/sequential_transfers.ts"
+        "continous_transfers": "yarn tsx scripts/sequential_transfers.ts",
+        "override_state": "yarn tsx scripts/post_setup/update_core_contract_state.ts",
+        "post_madara_setup": "yarn tsx/post_setup/index.ts"
     },
     "keywords": [],
-    "author": "",
+    "author": "karnot.xyz",
     "license": "ISC",
     "dependencies": {
-        "starknet": "^6.11.0"
+        "ethers": "^6.13.4",
+        "mongodb": "^6.10.0",
+        "starknet": "^6.11.0",
+        "uuid": "^11.0.2"
     },
     "devDependencies": {
         "@types/node": "^22.5.4",
