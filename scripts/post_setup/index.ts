@@ -20,6 +20,10 @@ import {
 import { upgradeETHToken } from "./upgrade_eth_token";
 import { upgradeETHBridge } from "./upgrade_eth_bridge";
 import { overrideStateOnCoreContract } from "./update_core_contract_state";
+import {
+  deployEthL1UpdatedBridge,
+  upgradeEthBridgeL1,
+} from "./upgrade_eth_l1_bridge";
 
 const l1_bridge_address = L1_BRIDGE_ADDRESS;
 const core_contract_address = STRK_CORE_CONTRACT;
@@ -81,6 +85,13 @@ const main = async () => {
     "🏦 Starknet expected account address:",
     starknet_account_address
   );
+
+  // ==========================================================================================
+  // TODO : change this implementation after getting response from nathan.
+  // upgrading eth l1 bridge
+  let new_eth_bridge_l1_deployment = await deployEthL1UpdatedBridge();
+  await upgradeEthBridgeL1(core_contract_address, new_eth_bridge_l1_deployment);
+  // ==========================================================================================
 
   await bridgeToChain(l1_bridge_address, starknet_account_address);
 
