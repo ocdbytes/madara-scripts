@@ -1,11 +1,6 @@
-import { RpcProvider } from "starknet";
+import { RpcProvider, StateUpdate } from "starknet";
 import { Contract, JsonRpcProvider, Wallet } from "ethers";
-import {
-  ETH_PRIV_KEY,
-  L1_RPC_URL,
-  L2_RPC_URL,
-  STRK_CORE_CONTRACT,
-} from "../constants";
+import { ETH_PRIV_KEY, L1_RPC_URL, L2_RPC_URL } from "../constants";
 
 const starknet_provider = new RpcProvider({
   nodeUrl: L2_RPC_URL,
@@ -14,8 +9,6 @@ const starknet_provider = new RpcProvider({
 const eth_provider = new JsonRpcProvider(L1_RPC_URL);
 
 const ETHEREUM_PRIVATE_KEY = ETH_PRIV_KEY;
-const BLOCK_NO = "54";
-const CORE_CONTRACT_ADDRESS = STRK_CORE_CONTRACT;
 
 const wallet = new Wallet(ETHEREUM_PRIVATE_KEY, eth_provider);
 
@@ -23,7 +16,9 @@ export async function overrideStateOnCoreContract(
   block_number: number,
   core_contract_address: string
 ) {
-  let state_update = await starknet_provider.getStateUpdate(block_number);
+  let state_update = (await starknet_provider.getStateUpdate(
+    block_number
+  )) as StateUpdate;
   let abi = [
     {
       type: "function",

@@ -1,4 +1,4 @@
-import { RpcProvider } from "starknet";
+import { CompiledSierra, RpcProvider } from "starknet";
 import {
   ETH_ADDRESS,
   L1_BRIDGE_ADDRESS,
@@ -45,9 +45,9 @@ const main = async () => {
   }
 
   // upgrade ETH token to Cairo 1 as SNOS breaks otherwise
-  const eth_token_class = await starknet_provider.getClassAt(
+  const eth_token_class = (await starknet_provider.getClassAt(
     l2_eth_token_address
-  );
+  )) as CompiledSierra;
   if (eth_token_class.sierra_program) {
     console.log("ℹ️ Eth token is already upgraded, proceeding");
   } else {
@@ -59,9 +59,9 @@ const main = async () => {
   }
 
   // upgrade ETH bridge to Cairo 1 as well
-  const l2_eth_bridge_class = await starknet_provider.getClassAt(
+  const l2_eth_bridge_class = (await starknet_provider.getClassAt(
     l2_eth_bridge_address
-  );
+  )) as CompiledSierra;
   if (l2_eth_bridge_class.sierra_program) {
     console.log("ℹ️ Eth bridge is already upgraded, proceeding");
   } else {

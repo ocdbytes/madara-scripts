@@ -1,5 +1,6 @@
 import {
   Account,
+  Block,
   CallData,
   Contract,
   ec,
@@ -113,8 +114,18 @@ export async function deployStarknetAccount(
 }
 
 export async function validateBlockPassesSnosChecks(block_number: number) {
+  type CustomComponent = {
+    l1_data_gas_price: {
+      price_in_fri: string;
+      price_in_wei: string;
+    };
+  };
+  type BlockResponse = Block & CustomComponent;
+
   console.log("⏳ Checking if block", block_number, "can be run in SNOS...");
-  const block = await starknet_provider.getBlock(block_number);
+  const block = (await starknet_provider.getBlock(
+    block_number
+  )) as BlockResponse;
 
   // block number must be >= 10
   if (block_number < 10) {
